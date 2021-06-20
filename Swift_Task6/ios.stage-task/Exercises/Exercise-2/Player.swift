@@ -13,12 +13,28 @@ protocol PlayerBaseCompatible {
 
 final class Player: PlayerBaseCompatible {
     var hand: [Card]?
-
+    
     func checkIfCanTossWhenAttacking(card: Card) -> Bool {
-        false
+        if hand == nil {
+            return false
+        }
+        
+        for cardInHand in hand! {
+            if cardInHand.value == card.value {
+                return true
+            }
+        }
+        return false
     }
-
+    
     func checkIfCanTossWhenTossing(table: [Card: Card]) -> Bool {
-        false
+        for cardInHand in hand! {
+            for cardOnTable in table {
+                if cardInHand.value == cardOnTable.value.value || cardInHand.value == cardOnTable.key.value{
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
